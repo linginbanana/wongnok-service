@@ -50,3 +50,12 @@ go test ./internal/...
 ```sh
 go run cmd/server/main.go
 ```
+
+## 6. Swagger
+
+[Swagger](http://localhost:8000/swagger/index.html)
+
+## 7. Authorization
+
+[Login / Register](http://localhost:8000/api/v1/login)
+[Logout](http://localhost:8000/api/v1/logout)
