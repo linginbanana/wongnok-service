@@ -58,4 +58,5 @@ go run cmd/server/main.go
 ## 7. Authorization
 
 [Login / Register](http://localhost:8000/api/v1/login)
+
 [Logout](http://localhost:8000/api/v1/logout)
