@@ -9,11 +9,11 @@ import (
 )
 
 type Keycloak struct {
-	ClientID     string `env:"KEYCLOCK_CLIENT_ID"`
-	ClientSecret string `env:"KEYCLOCK_CLIENT_SECRET"`
-	RedirectURL  string `env:"KEYCLOCK_REDIRECT_URL"`
-	Realm        string `env:"KEYCLOAK_REALM"`
-	URL          string `env:"KEYCLOAK_URL"`
+	ClientID     string `env:"KEYCLOCK_CLIENT_ID" envDefault:"wongnok"`
+	ClientSecret string `env:"KEYCLOCK_CLIENT_SECRET" envDefault:"R6UCkSremn7nOYkNzqxJVUcVNPnG5fu7"`
+	RedirectURL  string `env:"KEYCLOCK_REDIRECT_URL" envDefault:"http://localhost:8000/api/v1/callback"`
+	Realm        string `env:"KEYCLOAK_REALM" envDefault:"pea-devpool-2025"`
+	URL          string `env:"KEYCLOAK_URL" envDefault:"https://sso-dev.odd.works"`
 }
 
 func (kc Keycloak) RealmURL() string {
