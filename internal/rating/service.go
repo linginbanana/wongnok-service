@@ -3,7 +3,7 @@ package rating
 import (
 	"wongnok/internal/model"
 	"wongnok/internal/model/dto"
-	"wongnok/internal/user"
+	"wongnok/internal/users"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/pkg/errors"

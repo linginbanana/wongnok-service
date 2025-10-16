@@ -32,20 +32,7 @@ func NewHandler(db *gorm.DB) *Handler {
 	}
 }
 
-// Create godoc
-// @Summary Create a food recipe
-// @Description Create a new food recipe
-// @Tags food-recipes
-// @Accept json
-// @Produce json
-// @Param recipe body dto.FoodRecipeRequest true "Recipe data"
-// @Success 201 {object} dto.FoodRecipeResponse
-// @Failure 400 {object} map[string]interface{}
-// @Failure 401 {object} map[string]interface{}
-// @Failure 403 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
-// @Security BearerAuth
-// @Router /api/v1/food-recipes [post]
+
 func (handler Handler) Create(ctx *gin.Context) {
 	claims, err := helper.DecodeClaims(ctx)
 	if err != nil {
@@ -78,19 +65,7 @@ func (handler Handler) Create(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, recipe.ToResponse())
 }
 
-// Get godoc
-// @Summary Get a food recipe
-// @Description Get a list of food recipes with pagination
-// @Tags food-recipes
-// @Accept json
-// @Produce json
-// @Param page query int true "Page number" (default 1)
-// @Param limit query int true "Items per page" (default 10)
-// @Param search query string false "Search term"
-// @Success 200 {object} dto.FoodRecipesResponse
-// @Failure 400 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
-// @Router /api/v1/food-recipes [get]
+
 func (handler Handler) Get(ctx *gin.Context) {
 	var foodRecipeQuery model.FoodRecipeQuery
 	if err := ctx.ShouldBindQuery(&foodRecipeQuery); err != nil {
@@ -106,17 +81,7 @@ func (handler Handler) Get(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, recipes.ToResponse(total))
 }
 
-// GetByID godoc
-// @Summary Get food recipe by ID
-// @Description Get a single food recipe by ID
-// @Tags food-recipes
-// @Accept json
-// @Produce json
-// @Param id path int true "Recipe ID"
-// @Success 200 {object} dto.FoodRecipeResponse
-// @Failure 400 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
-// @Router /api/v1/food-recipes/{id} [get]
+
 func (handler Handler) GetByID(ctx *gin.Context) {
 	var id int
 
@@ -140,21 +105,7 @@ func (handler Handler) GetByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, recipe.ToResponse())
 }
 
-// Update godoc
-// @Summary Update food recipe
-// @Description Update an existing food recipe
-// @Tags food-recipes
-// @Accept json
-// @Produce json
-// @Param id path int true "Recipe ID"
-// @Param recipe body dto.FoodRecipeRequest true "Recipe data"
-// @Success 200 {object} dto.FoodRecipeResponse
-// @Failure 400 {object} map[string]interface{}
-// @Failure 401 {object} map[string]interface{}
-// @Failure 403 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
-// @Security BearerAuth
-// @Router /api/v1/food-recipes/{id} [put]
+
 func (handler Handler) Update(ctx *gin.Context) {
 	claims, err := helper.DecodeClaims(ctx)
 	if err != nil {
@@ -195,19 +146,7 @@ func (handler Handler) Update(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, recipe.ToResponse())
 }
 
-// Delete godoc
-// @Summary Delete food recipe
-// @Description Delete a food recipe by ID
-// @Tags food-recipes
-// @Accept json
-// @Produce json
-// @Param id path int true "Recipe ID"
-// @Success 200 {object} map[string]interface{}
-// @Failure 401 {object} map[string]interface{}
-// @Failure 403 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
-// @Security BearerAuth
-// @Router /api/v1/food-recipes/{id} [delete]
+
 func (handler Handler) Delete(ctx *gin.Context) {
 	claims, err := helper.DecodeClaims(ctx)
 	if err != nil {

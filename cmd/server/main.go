@@ -8,7 +8,7 @@ import (
 	"wongnok/internal/foodrecipe"
 	"wongnok/internal/middleware"
 	"wongnok/internal/rating"
-	"wongnok/internal/user"
+	"wongnok/internal/users"
 
 	"github.com/caarlos0/env/v11"
 	"github.com/coreos/go-oidc"
@@ -26,18 +26,16 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
+	//ส่วนเพิ่ม
+    "wongnok/internal/favorites"
+    "wongnok/internal/profile"
+
 	
 
 
 )
 
-// @title Wongnok API
-// @version 1.0
-// @description This is an wongnok server.
-// @host localhost:8000
-// @securityDefinitions.apikey BearerAuth
-// @in header
-// @name Authorization
+
 func main() {
 	// Context
 	ctx := context.Background()
@@ -88,6 +86,12 @@ func main() {
 		},
 		provider.Verifier(&oidc.Config{ClientID: conf.Keycloak.ClientID}),
 	)
+
+	
+	// Handlerส่วนเพิ่ม
+	favoriteHandler := favorite.NewHandler(db)
+	profileHandler := profile.NewHandler(db)
+	
 	userHandler := user.NewHandler(db)
 
 	// Router
@@ -128,8 +132,30 @@ func main() {
 
 	// User
 	group.GET("/users/:id/food-recipes", middleware.Authorize(verifierSkipClientIDCheck), userHandler.GetRecipes)
-
+	group.GET("/users/", middleware.Authorize(verifierSkipClientIDCheck), userHandler.Get)
+	group.POST("/users/", middleware.Authorize(verifierSkipClientIDCheck), userHandler.Create)
+	group.PUT("/users/", middleware.Authorize(verifierSkipClientIDCheck), userHandler.Update)
+	//group.DELETE("/users/:id", middleware.Authorize(verifierSkipClientIDCheck), userHandler.Delete)
+	
 	if err := router.Run(":8000"); err != nil {
 		log.Fatal("Server error:", err)
 	}
+
+	
+	// Route ส่วนเพิ่ม
+	group.POST("/users/:id/favorites", middleware.Authorize(verifierSkipClientIDCheck), favoriteHandler.Create)
+	group.DELETE("/users/:id/favorites/:recipeId", middleware.Authorize(verifierSkipClientIDCheck), favoriteHandler.Delete)
+
+	group.GET("/users/:id/favorites", middleware.Authorize(verifierSkipClientIDCheck), favoriteHandler.Get)
+
+	group.POST("/users/:id/profile", middleware.Authorize(verifierSkipClientIDCheck), profileHandler.Update)
+	group.GET("/users/:id/profile", middleware.Authorize(verifierSkipClientIDCheck), profileHandler.Get)
+
+
+	/*// Favorite
+	group.POST("/favorites", middleware.Authorize(verifierSkipClientIDCheck), favoriteHandler.Add)
+	group.GET("/favorites", middleware.Authorize(verifierSkipClientIDCheck), favoriteHandler.Get)
+	//group.PUT("/favorites/:id", middleware.Authorize(verifierSkipClientIDCheck), favoriteHandler.)
+	group.DELETE("/favorites/:id", middleware.Authorize(verifierSkipClientIDCheck), favoriteHandler.Remove)*/
+
 }

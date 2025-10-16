@@ -5,7 +5,7 @@ import (
 	"wongnok/internal/config"
 	"wongnok/internal/model"
 	"wongnok/internal/model/dto"
-	"wongnok/internal/user"
+	"wongnok/internal/users"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"

@@ -426,3 +426,5 @@ func (suite *HandlerLogoutTestSuite) TestErrorWhenGetLogoutURL() {
 func TestHandlerLogout(t *testing.T) {
 	suite.Run(t, new(HandlerLogoutTestSuite))
 }
+
+
